@@ -1,0 +1,81 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: 'Play', sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+header img {
+    width: 50px;
+}
+
+#punteggio {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: lightblue;
+}
+
+main h2 {
+    width: 300px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#ms_griglia {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.ms_cella {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.ms_cella.easy {
+    width: calc(100% / 10);
+    height: calc(100% / 10);
+}
+
+.ms_cella.medium {
+    width: calc(100% / 9);
+    height: calc(100% / 9);
+}
+
+.ms_cella.hard {
+    width: calc(100% / 7);
+    height: calc(100% / 7);
+}
+
+.ms_flower {
+    background-color: lightgoldenrodyellow;
+}
+
+.ms_bomb {
+    background-color: red;
+}

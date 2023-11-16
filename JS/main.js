@@ -1,35 +1,13 @@
 'use strict';
 
-// Reset del gioco
-function resetGame(grid) {
-    // Pulisci la console
-    console.clear();
+let score = 0;
 
-    // Nascondi il messaggio visualizzato se presente
-    const messaggio = document.getElementById('messaggio');
-    if (!messaggio.classList.contains('d-none')) {
-        messaggio.classList.add('d-none');
-    }
-    // Rimuovi tutte le celle esistenti
-    while (grid.firstChild) {
-        grid.removeChild(grid.firstChild);
-    }
+// Funzione per generare un numero casuale in un intervallo
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-// Funzione per la creazione delle celle
-function createElement(tag, classes, content) {
-    function addClasses(element, classes) {
-        for (let i = 0; i < classes.length; i++) {
-            element.classList.add(classes[i]);
-        }
-    }
-    const element = document.createElement(tag);
-    addClasses(element, classes);
-    element.textContent = content;
-    return element;
-}
-
-// Funzione per associare il numero di righe e colonne alla difficoltà
+// Funzione per calcolare il numero di celle in base alla difficoltà
 function calcCelle() {
     const difficulty = document.getElementById('mode').value;
     let celle;
@@ -50,19 +28,125 @@ function calcCelle() {
     return celle;
 }
 
-// Funzione per aggiungere le celle al DOM
-function createCelle(grid, celle) {
-    const difficulty = document.getElementById('mode').value;
-    const fragment = new DocumentFragment();
-    for (let i = 1; i <= celle; i++) {
-        const cellElement = createElement('div', ['ms_cella', difficulty], i);
-        cellElement.addEventListener('click', function () {
-            cellElement.classList.add('ms_clicked');
-            console.log("Ho cliccato su:", i);
-        });
-        fragment.appendChild(cellElement);
+// Funzione per generare le bombe 
+const numBombs = 16; // Imposta il numero desiderato di bombe
+function generateBombs(totalCells) {
+    const bombs = [];
+    while (bombs.length < numBombs) {
+        const bomb = getRandomNumber(1, totalCells);
+        if (!bombs.includes(bomb)) {
+            bombs.push(bomb);
+        }
     }
+    return bombs;
+}
+
+// Funzione per verificare se la cella è una bomba
+function checkForBomb(cellIndex, bombs) {
+    let isBomb = false;
+    let i = 0;
+    while (i < bombs.length && !isBomb) {
+        if (bombs[i] === cellIndex) {
+            isBomb = true;
+        }
+        i++;
+    }
+    return isBomb;
+}
+
+// Funzione per gestire il click sulle celle
+function handleCellClick(cellElement, cellIndex, bombs) {
+    const isBomb = checkForBomb(cellIndex, bombs);
+
+    if (!isBomb && !cellElement.classList.contains('ms_flower') && !cellElement.classList.contains('ms_bomb')) {
+        // Cella sicura cliccata
+        cellElement.classList.add('ms_flower');
+        updateScore();
+    } else if (isBomb) {
+        // Bomba cliccata
+        cellElement.classList.add('ms_bomb');
+        endGame(false);
+    }
+}
+
+// Funzione per creare una cella
+function createCell(difficulty, bombs, index) {
+    const cellElement = document.createElement('div');
+    cellElement.classList.add('ms_cella', difficulty);
+    cellElement.addEventListener('click', function () {
+        handleCellClick(cellElement, index, bombs);
+    });
+    return cellElement;
+}
+
+// Funzione per aggiungere tutte le celle al DOM
+function createCelle(grid, difficulty, bombs) {
+    const totalCells = calcCelle(difficulty);
+    const fragment = new DocumentFragment();
+    const celleArray = [];
+
+    for (let i = 0; i < totalCells; i++) {
+        const cellElement = createCell(difficulty, bombs, i);
+        fragment.appendChild(cellElement);
+        celleArray.push(cellElement);
+    }
+
     grid.appendChild(fragment);
+
+    return celleArray;
+}
+
+// Funzione per resettare il punteggio a 0
+function resetScore() {
+    score = 0;
+    const punteggio = document.getElementById('punteggio');
+    punteggio.textContent = 'Punteggio: 0';
+    punteggio.classList.remove('d-none');
+}
+
+// Funzione per nascondere il messaggio
+function hideMessage() {
+    const messaggio = document.getElementById('messaggio');
+    if (!messaggio.classList.contains('d-none')) {
+        messaggio.classList.add('d-none');
+    }
+}
+
+// Funzione per rimuovere le celle esistenti
+function removeExistingCells(grid) {
+    while (grid.firstChild) {
+        grid.removeChild(grid.firstChild);
+    }
+}
+
+// Funzione per resettare il gioco
+function resetGame(grid) {
+    hideMessage();
+    removeExistingCells(grid);
+    resetScore();
+}
+
+// Funzione per aggiornare il punteggio
+function updateScore() {
+    score++;
+    const scoreElement = document.getElementById('punteggio');
+    scoreElement.textContent = 'Punteggio: ' + score;
+
+    // Verifica se tutte le celle sicure sono state cliccate
+    if (score === calcCelle() - numBombs) {
+        endGame(true);
+    }
+}
+
+// Funzione per terminare il gioco
+function endGame(victory) {
+    const messaggio = document.getElementById('messaggio');
+    if (victory) {
+        messaggio.textContent = 'Hai vinto!';
+    } else {
+        messaggio.textContent = 'Hai perso.';
+    }
+    messaggio.classList.remove('d-none');
 }
 
 // Funzione principale del gioco
@@ -73,10 +157,13 @@ function game() {
     resetGame(grid);
 
     // Calcola il numero di celle in base alla difficoltà
-    const celle = calcCelle();
+    const difficulty = document.getElementById('mode').value;
+
+    // Genera bombe
+    const bombs = generateBombs(calcCelle(difficulty));
 
     // Crea le celle
-    createCelle(grid, celle);
+    const celleArray = createCelle(grid, difficulty, bombs);
 }
 
 // Gestione del click su play
