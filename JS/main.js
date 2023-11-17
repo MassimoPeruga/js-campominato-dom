@@ -1,6 +1,7 @@
 'use strict';
 
 let score = 0;
+let gameOver = false;
 
 // Funzione per generare un numero casuale in un intervallo
 function getRandomNumber(min, max) {
@@ -56,6 +57,11 @@ function checkForBomb(cellIndex, bombs) {
 
 // Funzione per gestire il click sulle celle
 function handleCellClick(cellElement, cellIndex, bombs) {
+    // Controlla se la partita è terminata
+    if (gameOver) {
+        return;
+    }
+
     const isBomb = checkForBomb(cellIndex, bombs);
 
     if (!isBomb && !cellElement.classList.contains('ms_flower') && !cellElement.classList.contains('ms_bomb')) {
@@ -66,6 +72,14 @@ function handleCellClick(cellElement, cellIndex, bombs) {
         // Bomba cliccata
         cellElement.classList.add('ms_bomb');
         endGame(false);
+    }
+}
+
+// Funzione per disabilitare gli eventListener delle celle
+function disableCellClick() {
+    const celle = document.getElementsByClassName('ms_cella');
+    for (let i = 0; i < celle.length; i++) {
+        celle[i].removeEventListener('click', handleCellClick);
     }
 }
 
@@ -121,6 +135,7 @@ function removeExistingCells(grid) {
 
 // Funzione per resettare il gioco
 function resetGame(grid) {
+    gameOver = false;
     hideMessage();
     removeExistingCells(grid);
     resetScore();
@@ -147,6 +162,10 @@ function endGame(victory) {
         messaggio.textContent = 'Hai perso.';
     }
     messaggio.classList.remove('d-none');
+
+    // Disabilita gli eventListener dopo la fine della partita
+    gameOver = true;
+    disableCellClick();
 }
 
 // Funzione principale del gioco

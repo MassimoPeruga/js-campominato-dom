@@ -45,3 +45,18 @@ Il programma è stato sviluppato suddiviso in funzioni, ognuna dedicata ad opera
         3. pusha la cella nell'array di celle.
     - Appende il frammento alla griglia di gioco,
     - Restituisce l'array delle celle.
+
+
+## SuperBonus 1
+
+Queste modifiche assicurano che una volta che la partita è terminata (vincendo o perdendo), non sarà possibile cliccare su altre celle.
+
+1. È stata introdotta una variabile `gameOver` che funge da segnalatore per indicare se la partita è terminata o meno.
+
+2. Prima di eseguire le operazioni al suo interno, la funzione **`handleCellClick`** controlla se la partita è già terminata, in questo caso la funzione esce prematuramente senza eseguire ulteriori azioni.
+
+5. **`endGame`** quando richimata adesso:
+    - Imposta `gameOver` su `true`, questo stato viene verificato in `handleCellClick` per evitare azioni indesiderate,
+    - Richiama una nuova funzione **`disableCellClick`** che rimuove gli event listener associati al click sulle celle.
+
+4. **`resetGame`** quando richimata adesso imposta `gameOver` su `false`.
