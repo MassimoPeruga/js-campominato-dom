@@ -1,44 +1,29 @@
-body {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    font-family: 'Play', sans-serif;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-}
-
-header img {
-    width: 50px;
-}
-
-#punteggio {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 main {
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    background-color: lightblue;
+    background-color: var(--blue-boolean);
+    color: var(--green-boolean);
 }
 
+/* Messaggio visualizzato */
 main h2 {
-    width: 300px;
+    background-color: var(--blue-boolean);
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    font-size: 2rem;
+    display: flex;
     text-align: center;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 3;
 }
 
 #ms_griglia {
@@ -47,10 +32,13 @@ main h2 {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
+    background-color: var(--bg-griglia);
+    border-color: var(--ms-white);
 }
 
 .ms_cella {
-    border: 1px solid black;
+    border-top: 1px solid var(--ms-white);
+    border-right: 1px solid var(--ms-white);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -73,9 +61,26 @@ main h2 {
 }
 
 .ms_flower {
-    background-color: lightgoldenrodyellow;
+    background-color: var(--bg-flower);
+    font-size: 1.75rem;
+    color: var(--flower);
+    position: relative;
+}
+
+.ms_flower::after {
+    content: '\f111';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 600;
+    font-size: 8px;
+    color: var(--flower-circle);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
 }
 
 .ms_bomb {
-    background-color: red;
+    background-color: var(--bg-bomb);
+    color: var(--bomb);
 }

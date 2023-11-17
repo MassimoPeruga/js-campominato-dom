@@ -1,0 +1,7 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: 'Play', sans-serif;
+    color: var(--blue-boolean);
+}

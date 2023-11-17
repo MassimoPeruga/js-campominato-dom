@@ -1,1 +1,5 @@
+@import url('_partials/variables.css');
+@import url('_partials/global.css');
+@import url('_partials/header.css');
 @import url('_partials/main.css');
+@import url('_partials/footer.css');

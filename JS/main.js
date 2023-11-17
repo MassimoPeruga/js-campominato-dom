@@ -55,6 +55,17 @@ function checkForBomb(cellIndex, bombs) {
     return isBomb;
 }
 
+// Funzione per aggiungere la classe ms_bomb alle celle contenenti bombe
+function markBombCells(bombs) {
+    const cells = document.getElementsByClassName('ms_cella');
+    for (let i = 0; i < cells.length; i++) {
+        if (checkForBomb(i, bombs)) {
+            cells[i].classList.add('ms_bomb');
+            cells[i].innerHTML = '<i class="fa-solid fa-bomb fa-shake"></i>';
+        }
+    }
+}
+
 // Funzione per gestire il click sulle celle
 function handleCellClick(cellElement, cellIndex, bombs) {
     // Controlla se la partita è terminata
@@ -67,10 +78,11 @@ function handleCellClick(cellElement, cellIndex, bombs) {
     if (!isBomb && !cellElement.classList.contains('ms_flower') && !cellElement.classList.contains('ms_bomb')) {
         // Cella sicura cliccata
         cellElement.classList.add('ms_flower');
+        cellElement.innerHTML = '<i class="fa-solid fa-clover fa-spin-pulse"></i>';
         updateScore();
     } else if (isBomb) {
         // Bomba cliccata
-        cellElement.classList.add('ms_bomb');
+        markBombCells(bombs);
         endGame(false);
     }
 }
@@ -106,6 +118,7 @@ function createCelle(grid, difficulty, bombs) {
     }
 
     grid.appendChild(fragment);
+    grid.classList.remove('border');
 
     return celleArray;
 }

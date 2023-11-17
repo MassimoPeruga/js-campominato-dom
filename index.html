@@ -16,6 +16,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
     <!-- /Google font Play -->
 
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- /FontAwesome -->
+
     <!-- Il mio foglio di stile -->
     <link rel="stylesheet" href="CSS/style.css">
     <!-- /Il mio foglio di stile -->
@@ -26,23 +32,25 @@
     <header class="p-2">
         <div class="d-flex">
             <img src="img/logo.png" alt="Logo">
-            <h1 class="fw-bold m-0">Prato Fiorito</h1>
+            <h1 class="fw-bold m-0 d-flex align-items-center">Prato Fiorito</h1>
         </div>
         <div id="punteggio" class="d-none">
             Punteggio:
         </div>
-        <div>
-            <label for="mode">Difficoltà:</label>
-            <select id="mode" class="ms-1 me-2">
-                <option value="easy">Facile</option>
-                <option value="medium" selected>Media</option>
-                <option value="hard">Difficile</option>
-            </select>
-            <button id="play">Play</button>
+        <div class="d-flex align-items-center">
+            <div class="form-floating me-2">
+                <select class="form-select ms_select" id="mode" aria-label="Difficoltà">
+                    <option value="easy">Facile</option>
+                    <option value="medium" selected>Media</option>
+                    <option value="hard">Difficile</option>
+                </select>
+                <label for="mode">Difficoltà:</label>
+            </div>
+            <button id="play" class="btn btn-lg">Play</button>
         </div>
     </header>
     <main>
-        <div id="ms_griglia">
+        <div id="ms_griglia" class="border-bottom border-start border">
             <!-- Celle inserite da JS -->
         </div>
         <h2 id="messaggio" class="m-0">Clicca su play per iniziare a giocare!</h2>

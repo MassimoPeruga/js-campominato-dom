@@ -53,10 +53,16 @@ Queste modifiche assicurano che una volta che la partita è terminata (vincendo 
 
 1. È stata introdotta una variabile `gameOver` che funge da segnalatore per indicare se la partita è terminata o meno.
 
-2. Prima di eseguire le operazioni al suo interno, la funzione **`handleCellClick`** controlla se la partita è già terminata, in questo caso la funzione esce prematuramente senza eseguire ulteriori azioni.
+2. Prima di eseguire le operazioni al suo interno, **`handleCellClick()`** controlla se la partita è già terminata, in questo caso la funzione esce prematuramente senza eseguire ulteriori azioni.
 
 5. **`endGame`** quando richimata adesso:
-    - Imposta `gameOver` su `true`, questo stato viene verificato in `handleCellClick` per evitare azioni indesiderate,
-    - Richiama una nuova funzione **`disableCellClick`** che rimuove gli event listener associati al click sulle celle.
+    - Imposta `gameOver` su `true`, questo stato viene verificato in `handleCellClick()` per evitare azioni indesiderate,
+    - Richiama una nuova funzione **`disableCellClick()`** che rimuove gli event listener associati al click sulle celle.
 
 4. **`resetGame`** quando richimata adesso imposta `gameOver` su `false`.
+
+## Superbonus 2
+
+Queste modifiche permettono al giocatore di vedere tutte le bombe quando la partita termina in una sconfitta.
+
+1.  **`handleCellClick()`** ora se la cella cliccata è una bomba, richiama una nuova funzione **`markBombCells()`** che scorre attraverso tutte le celle della griglia e verifica se ciascuna cella contiene una bomba, in tal caso aggiunge la classe `ms_bomb` alla cella rendendo visibile la posizione di tutte le bombe sulla griglia.

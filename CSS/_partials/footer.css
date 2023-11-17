@@ -1,0 +1,8 @@
+footer {
+    background-color: var(--green-boolean);
+}
+
+footer a {
+    font-weight: bold;
+    color: var(--ms-white);
+}

@@ -1,0 +1,29 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+header img {
+    width: 50px;
+}
+
+#punteggio {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.75rem;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: var(--blue-boolean);
+    color: var(--green-boolean);
+}
+
+.ms_select,
+#play {
+    background-color: var(--green-boolean);
+    border: 2px solid;
+    height: 58px;
+}
